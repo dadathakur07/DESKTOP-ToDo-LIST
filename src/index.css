@@ -84,68 +84,50 @@
     filter: blur(24px);
   }
 
-  /* REDUCED GLOW & COOL FLOATING/SHIMMER FOR PROJECT/SKILLS CARDS */
-  .animated-card-float {
-    /* Shared, less-glow, and floating with an animated shimmer border */
+  /* NEW: Floating project animation and border shimmer for project cards */
+  .hacker-project-card {
     position: relative;
     overflow: visible;
-    border-radius: 1.2rem;
+    z-index: 5;
     will-change: transform, box-shadow, filter;
-    animation: float-cooler 3.7s ease-in-out infinite alternate, border-shimmer-cool 4.8s linear infinite;
-    transition: box-shadow 0.21s, transform 0.18s, filter 0.22s;
-    box-shadow: 0 0 34px 0 #00ff0033, 0 0 0 0 #fff0;
-    background: rgba(26,31,44,0.98);
+    animation: float-cool 3.5s ease-in-out infinite alternate, pulse-glow 3.4s ease-in-out infinite alternate;
+    transition: box-shadow 0.27s, transform 0.22s, filter 0.22s;
+    box-shadow: 0 0 80px 0 #00ff0030, 0 0 0 0 #ffcc0066;
   }
-  .animated-card-float:hover {
-    /* Subtle lift and scale, barely more glow, less than before */
-    transform: translateY(-8px) scale(1.03) rotate(-0.5deg);
-    filter: brightness(1.08) saturate(1.2);
-    box-shadow:
-      0 0 58px 8px #36ffe0aa,
-      0 0 28px 7px #7f7cff55,
-      0 0 4px 0 #fff2;
-    z-index: 18;
-    border-color: #36ffe0aa;
+  .hacker-project-card:hover {
+    transform: translateY(-10px) scale(1.04) rotate(-1deg);
+    filter: brightness(1.1) drop-shadow(0 0 36px #00ff66aa) saturate(1.5);
+    box-shadow: 0 0 90px 12px #00ff0080,0 0 66px 14px #ffcc00bb,0 0 2px 0 #fff;
+    z-index: 16;
   }
+  /* Neon border shimmer effect */
   .neon-border-shimmer {
     pointer-events: none;
     border-radius: 1.2rem;
     position: absolute;
     inset: -2px;
     background: linear-gradient(
-      110deg,
-      #18d1b9,
-      #7E69AB 20%,
-      #9b87f5 60%,
-      #8B5CF6 90%,
-      #18d1b9 100%
+      120deg,
+      #00ff00,
+      #ffcc00 25%,
+      #00ffcc 55%,
+      #ff44ee 85%,
+      #00ff00
     );
-    opacity: 0.10;
-    filter: blur(6px) brightness(1.1);
+    opacity: 0.15;
+    filter: blur(7px) brightness(1.5);
     z-index: 2;
-    animation: border-shimmer-cool 4.8s linear infinite;
-    transition: opacity 0.25s;
+    animation: border-shimmer 2.9s linear infinite;
+    transition: opacity 0.3s;
     mix-blend-mode: screen;
   }
-  .animated-card-float:hover .neon-border-shimmer {
-    opacity: 0.19;
-    filter: blur(13px) brightness(1.42);
-  }
-
-  /* REMOVE the intense .hacker-project-card hover shadow */
-  .hacker-project-card {
-    /* Inherit all from animated-card-float, keep border for older code. */
-    border-width: 1.5px;
-    border-style: solid;
-    border-color: #00ff0055;
+  .hacker-project-card:hover .neon-border-shimmer {
+    opacity: 0.4;
+    filter: blur(18px) brightness(2.4);
   }
 }
 
-/* Utility for .animated-card-float (for use in both projects and skills) */
 @layer utilities {
-  .animated-card-float {
-    @apply transition-transform duration-300;
-  }
   box-shadow: 0 4px 20px rgba(0, 255, 0, 0.5);
   .shadow-neon {
     box-shadow: 0 4px 20px rgba(0, 255, 0, 0.5), 0 0 12px #ffcc0033, 0 1px 16px #00ff0066;
@@ -375,49 +357,6 @@ body.dark-mode {
     opacity: 1;
     filter: blur(0) brightness(1.13);
     transform: scale(1) translateY(0) rotate(0deg);
-  }
-}
-
-@keyframes float-cooler {
-  0% {
-    transform: translateY(0) scale(1) rotate(0);
-    box-shadow: 0 0 12px 0 #12efc690, 0 0 0 0 #fff0;
-  }
-  40% {
-    transform: translateY(-4px) scale(1.012) rotate(-0.4deg);
-    box-shadow: 0 0 25px 0 #9b87f533,0 0 5px 0 #7E69AB44;
-  }
-  78% {
-    transform: translateY(-7px) scale(1.022) rotate(-1.3deg);
-    box-shadow: 0 0 38px 0 #8B5CF650,0 0 11px 4px #7E69AB44;
-  }
-  100% {
-    transform: translateY(-4.7px) scale(1.012) rotate(-0.6deg);
-    box-shadow: 0 0 19px 2px #18d1b955,0 0 8px 2px #8B5CF645;
-  }
-}
-
-/* Softer border shimmer, less opacity than before */
-@keyframes border-shimmer-cool {
-  0% {
-    background-position: 0% 60%;
-    opacity: 0.06;
-  }
-  27% {
-    background-position: 45% 78%;
-    opacity: 0.14;
-  }
-  61% {
-    background-position: 100% 22%;
-    opacity: 0.18;
-  }
-  75%{
-    background-position: 70% 75%;
-    opacity: 0.14;
-  }
-  100% {
-    background-position: 0% 60%;
-    opacity: 0.07;
   }
 }
 

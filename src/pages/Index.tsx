@@ -96,7 +96,7 @@ export default function Index() {
           </p>
         </section>
 
-        {/* SKILLS; add new animated card class */}
+        {/* SKILLS */}
         <section id="skills" className="rounded-2xl glass-morphism p-8 mt-2 animate-slide-in-right">
           <h2 className="text-2xl font-bold mb-4 text-cyan-400 flex items-center gap-2">
             <Cpu className="w-5 h-5" /> Skills
@@ -105,10 +105,8 @@ export default function Index() {
             {skills.map(({ icon: Icon, label }) => (
               <div
                 key={label}
-                className="flex flex-col items-center animated-card-float hover-scale p-4 rounded-lg shadow-md shadow-cyan-900/10 bg-white/5"
+                className="flex flex-col items-center glass-morphism hover-scale p-4 rounded-lg shadow-md shadow-cyan-900/10 bg-white/5"
               >
-                {/* Add shimmer */}
-                <span className="absolute inset-0 z-10 pointer-events-none neon-border-shimmer rounded-2xl" />
                 <Icon className="w-8 h-8 mb-2 text-cyan-300 animate-fade-in" />
                 <span className="font-mono text-gray-200/80 text-lg">{label}</span>
               </div>
@@ -126,8 +124,8 @@ export default function Index() {
               <Card
                 key={title}
                 className={`
-                  hacker-project-card animated-card-float
-                  border border-cyan-500/10 flex flex-col md:flex-row items-center md:items-start gap-5 p-6
+                  hacker-project-card
+                  glass-morphism border border-cyan-500/10 flex flex-col md:flex-row items-center md:items-start gap-5 p-6
                   animate-project-entrance
                   hover:z-30
                 `}
@@ -135,7 +133,6 @@ export default function Index() {
                   animationDelay: `${projects.findIndex(p => p.title === title) * 0.12}s`
                 }}
               >
-                {/* Shimmer border for project card */}
                 <span className="absolute inset-0 z-10 pointer-events-none neon-border-shimmer rounded-2xl" />
                 <Icon className="w-10 h-10 text-cyan-400 drop-shadow-lg z-20" />
                 <div className="z-20">
