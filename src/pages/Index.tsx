@@ -1,11 +1,9 @@
+
 import { useState, useEffect } from "react";
 import { Github, Monitor, Cpu, Terminal, Code, Wrench, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-
-// Add a "cyberFont" style for the cyberpunk hacker vibes using tailwind's font-sans to map to Orbitron
-// Also we will add this as a wrapping div or main with font-sans so all text is in the cyberpunk font
 
 function Typewriter({ text, delay = 70 }) {
   const [displayed, setDisplayed] = useState("");
@@ -151,3 +149,4 @@ export default function Index() {
     </div>
   );
 }
+
