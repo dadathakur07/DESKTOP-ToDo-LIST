@@ -1,9 +1,11 @@
-
 import { useState, useEffect } from "react";
 import { Github, Monitor, Cpu, Terminal, Code, Wrench, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+
+// Add a "cyberFont" style for the cyberpunk hacker vibes using tailwind's font-sans to map to Orbitron
+// Also we will add this as a wrapping div or main with font-sans so all text is in the cyberpunk font
 
 function Typewriter({ text, delay = 70 }) {
   const [displayed, setDisplayed] = useState("");
@@ -61,7 +63,7 @@ const projects = [
 
 export default function Index() {
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-[#1A1F2C] to-[#202844] dark:bg-gradient-to-tr dark:from-[#16181F] dark:to-[#0A0B14] transition-colors">
+    <div className="min-h-screen bg-gradient-to-tr from-[#1A1F2C] to-[#202844] dark:bg-gradient-to-tr dark:from-[#16181F] dark:to-[#0A0B14] transition-colors font-sans">
       <main className="max-w-4xl mx-auto px-4 py-12 flex flex-col gap-16">
         {/* HERO */}
         <section className="flex flex-col items-center justify-center text-center pt-4">
