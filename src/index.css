@@ -86,28 +86,26 @@
 
   /* REDUCED GLOW & COOL FLOATING/SHIMMER FOR PROJECT/SKILLS CARDS */
   .animated-card-float {
-    /* Less glow, enhanced floating, new shimmer for both project and skill cards */
+    /* Shared, less-glow, and floating with an animated shimmer border */
     position: relative;
     overflow: visible;
     border-radius: 1.2rem;
     will-change: transform, box-shadow, filter;
-    animation:
-      float-coolest 3.2s cubic-bezier(0.32,1.14,0.62,1.09) infinite alternate,
-      border-shimmer-cooler 4.4s linear infinite;
+    animation: float-cooler 3.7s ease-in-out infinite alternate, border-shimmer-cool 4.8s linear infinite;
     transition: box-shadow 0.21s, transform 0.18s, filter 0.22s;
-    box-shadow: 0 0 16px 1px #34fefd14, 0 0 0 0 #fff0;
-    background: rgba(26,31,44,0.97);
+    box-shadow: 0 0 34px 0 #00ff0033, 0 0 0 0 #fff0;
+    background: rgba(26,31,44,0.98);
   }
   .animated-card-float:hover {
-    /* Reduced lift, subtle scale, barely more glow, for both */
-    transform: translateY(-11px) scale(1.035) rotate(-0.3deg);
-    filter: brightness(1.11) saturate(1.25);
+    /* Subtle lift and scale, barely more glow, less than before */
+    transform: translateY(-8px) scale(1.03) rotate(-0.5deg);
+    filter: brightness(1.08) saturate(1.2);
     box-shadow:
-      0 0 29px 6px #36ffe041,
-      0 0 11px 2.5px #7f7cff24,
+      0 0 58px 8px #36ffe0aa,
+      0 0 28px 7px #7f7cff55,
       0 0 4px 0 #fff2;
     z-index: 18;
-    border-color: #36ffe099;
+    border-color: #36ffe0aa;
   }
   .neon-border-shimmer {
     pointer-events: none;
@@ -115,72 +113,31 @@
     position: absolute;
     inset: -2px;
     background: linear-gradient(
-      120deg,
+      110deg,
       #18d1b9,
-      #7E69AB 17%,
-      #9b87f5 53%,
-      #8B5CF6 87%,
+      #7E69AB 20%,
+      #9b87f5 60%,
+      #8B5CF6 90%,
       #18d1b9 100%
     );
-    opacity: 0.08;
-    filter: blur(5px) brightness(1.05);
+    opacity: 0.10;
+    filter: blur(6px) brightness(1.1);
     z-index: 2;
-    animation: border-shimmer-cooler 4.4s linear infinite;
-    transition: opacity 0.23s, filter 0.23s;
+    animation: border-shimmer-cool 4.8s linear infinite;
+    transition: opacity 0.25s;
     mix-blend-mode: screen;
   }
   .animated-card-float:hover .neon-border-shimmer {
-    opacity: 0.17;
-    filter: blur(11px) brightness(1.28);
+    opacity: 0.19;
+    filter: blur(13px) brightness(1.42);
   }
+
   /* REMOVE the intense .hacker-project-card hover shadow */
   .hacker-project-card {
     /* Inherit all from animated-card-float, keep border for older code. */
     border-width: 1.5px;
     border-style: solid;
-    border-color: #00ff0040;
-  }
-
-  @keyframes float-coolest {
-    0% {
-      transform: translateY(0) scale(1) rotate(-0.4deg);
-      box-shadow: 0 0 15px 1px #36ffd022, 0 0 0 0 #fff0;
-    }
-    41% {
-      transform: translateY(-6px) scale(1.015) rotate(-1deg);
-      box-shadow: 0 0 33px 2px #44ffdd39,0 0 13px 0 #5bffd922;
-    }
-    77% {
-      transform: translateY(-13px) scale(1.028) rotate(-2deg);
-      box-shadow: 0 0 43px 1px #00ffd028,0 0 17px 5px #ffcc0039;
-    }
-    100% {
-      transform: translateY(-8px) scale(1.01) rotate(-1.4deg);
-      box-shadow: 0 0 27px 2px #1effee2b,0 0 7px 3px #ffcc0040;
-    }
-  }
-
-  @keyframes border-shimmer-cooler {
-    0% {
-      background-position: 0% 55%;
-      opacity: 0.06;
-    }
-    32% {
-      background-position: 51% 73%;
-      opacity: 0.13;
-    }
-    67% {
-      background-position: 96% 37%;
-      opacity: 0.18;
-    }
-    91%{
-      background-position: 81% 79%;
-      opacity: 0.12;
-    }
-    100% {
-      background-position: 0% 55%;
-      opacity: 0.07;
-    }
+    border-color: #00ff0055;
   }
 }
 
