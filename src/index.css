@@ -12,8 +12,11 @@
   }
   h1, h2, h3, h4, h5, h6 {
     @apply text-neon font-bold;
+    /* Flicker and animated glow for section headers */
+    animation: hacker-header-flicker 2.2s infinite alternate;
+    position: relative;
+    z-index: 1;
   }
-
   a, a:visited {
     @apply text-neon transition-colors duration-300;
     text-decoration: none;
@@ -28,34 +31,79 @@
     @apply backdrop-blur-md bg-paper/30 border border-neon/20 shadow-neon;
   }
   .btn-neon {
-    @apply bg-neon text-black px-4 py-2 rounded transition-colors hover:bg-accent hover:text-black font-bold;
+    @apply bg-neon text-black px-4 py-2 rounded transition-colors hover:bg-accent hover:text-black font-bold relative overflow-hidden;
+    box-shadow: 0 0 0px 0px #00ff00;
+    transition:
+      background 0.2s, color 0.2s, box-shadow 0.3s, filter 0.2s, transform 0.13s;
+  }
+  .btn-neon::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 12px;
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(100deg, #00ff00 50%, #ffcc00 100%);
+    opacity: 0.13;
+    filter: blur(8px);
+    transition: opacity 0.3s;
+  }
+  .btn-neon:active {
+    transform: scale(0.96);
+    filter: brightness(111%);
+    box-shadow: 0 0 26px 6px #00ff0066, 0 0 36px 18px #ffcc0033;
+  }
+  .btn-neon:hover {
+    box-shadow: 0 0 32px 6px #00ff0066, 0 0 60px 10px #ffcc0033, 0 0 2px 0 #fff;
   }
   .input-hacker {
     @apply bg-form border border-neon text-white rounded px-3 py-2 focus:border-accent focus:outline-none transition-colors;
+    box-shadow: 0 2px 12px 0 #00ff0033;
+    transition: box-shadow 0.3s, border-color 0.3s;
+  }
+  .input-hacker:focus {
+    box-shadow: 0 2px 18px 4px #ffcc0022, 0 0 0 2px #ffcc0050;
   }
   .card-hacker {
-    @apply bg-paper rounded shadow-neon p-4 transition-transform transform hover:scale-105 hover:shadow-neon;
+    @apply bg-paper rounded shadow-neon p-4 transition-transform transform hover:scale-105 hover:shadow-neon relative overflow-hidden;
+    /* Extra neon "aura" on hover */
+  }
+  .card-hacker::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.1;
+    background: radial-gradient(ellipse at 40% 60%, #00ff00 40%, transparent 90%);
+    filter: blur(8px);
+    transition: opacity 0.4s;
+    z-index: 1;
+  }
+  .card-hacker:hover::after {
+    opacity: 0.36;
+    background: radial-gradient(ellipse at 60% 60%, #ffcc00 20%, #00ff00 40%, #1e1e1e 90%);
+    filter: blur(24px);
   }
 }
 
 @layer utilities {
   box-shadow: 0 4px 20px rgba(0, 255, 0, 0.5);
   .shadow-neon {
-    box-shadow: 0 4px 20px rgba(0, 255, 0, 0.5);
+    box-shadow: 0 4px 20px rgba(0, 255, 0, 0.5), 0 0 12px #ffcc0033, 0 1px 16px #00ff0066;
   }
-
   .hover-scale {
     @apply transition-transform duration-200 hover:scale-105;
   }
-
   .text-gradient-primary {
     @apply bg-gradient-to-br from-neon via-neon/70 to-accent bg-clip-text text-transparent;
+    animation: animated-gradient 2.7s ease-in-out infinite alternate;
+    background-size: 200% 200%;
   }
-
-  /* NEW: Cool Animations */
-  .animate-pulse-glow {
-    animation: pulse-glow 1.4s infinite alternate cubic-bezier(0.4, 0, 0.6, 1);
+  /* Enhanced text flicker on request */
+  .flicker-super {
+    animation: flicker-cool 1.3s infinite alternate, neon-text-shadow 3.2s infinite alternate;
   }
+  /* Upgraded underlines and neon rainbow effects */
   .animate-underline {
     position: relative;
     overflow: hidden;
@@ -65,7 +113,7 @@
     position: absolute;
     left: 0; right: 0; bottom: 0;
     height: 3px;
-    background: linear-gradient(90deg, #00ff00 0%, #ffcc00 100%);
+    background: linear-gradient(90deg, #00ff00 0%, #ffcc00 40%, #0ff 80%, #ff44ee 100%);
     transform: scaleX(0);
     transition: transform 0.4s cubic-bezier(.43,1.2,.22,1);
     transform-origin: bottom right;
@@ -78,14 +126,25 @@
     animation: spin-cool 1.6s linear infinite;
   }
   .animate-bounce {
-    animation: bounce-cool 1s infinite alternate cubic-bezier(0.19,1,0.22,1);
+    animation: bounce-cool 0.85s infinite alternate cubic-bezier(0.19,1,0.22,1);
   }
   .animate-hacker-flicker {
-    animation: flicker-cool 2s infinite alternate;
+    animation: flicker-cool 2s infinite alternate, neon-text-shadow 1.8s infinite alternate;
+  }
+  .animate-entrance {
+    animation: entrance-glow 0.8s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  .animate-matrix {
+    position: fixed;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    animation: matrix-rain 22s linear infinite;
   }
 }
 
-/* Keyframes for NEW Animations */
+/* Keyframes for Cool Animations & Effects */
 @keyframes pulse-glow {
   0%, 100% {
     box-shadow: 0 0 12px 2px #00ff0066, 0 0 24px 12px #00ff001a;
@@ -96,17 +155,14 @@
     color: #ffcc00;
   }
 }
-
 @keyframes spin-cool {
   0% { transform: rotate(0deg);}
   100% { transform: rotate(360deg);}
 }
-
 @keyframes bounce-cool {
   0% { transform: translateY(0);}
   100% { transform: translateY(-15px) scale(1.08);}
 }
-
 @keyframes flicker-cool {
   0%, 100% { opacity: 1; filter: blur(0);}
   12% { opacity: 0.6;}
@@ -117,8 +173,71 @@
   77% { opacity: 0.95;}
   85% { opacity: 0.5;}
 }
+/* Rainbow-animated highlight for section headers and gradient text */
+@keyframes animated-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+/* Neon text-shadow flicker pulse */
+@keyframes neon-text-shadow {
+  0% {
+    text-shadow: 0 0 4px #00ff00, 0 0 8px #ffcc0033, 0 0 2px #fff;
+  }
+  50% {
+    text-shadow: 0 0 12px #00ff00, 0 0 4px #ffcc00, 0 0 10px #fff;
+  }
+  100% {
+    text-shadow: 0 0 18px #00ff00, 0 0 12px #ffcc0055, 0 0 2px #fff;
+  }
+}
+/* Entrance animation: combine scale, drop, opacity, glow */
+@keyframes entrance-glow {
+  from {
+    opacity: 0;
+    transform: scale(0.91) translateY(28px);
+    filter: blur(8px) brightness(0.81);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0) brightness(1);
+  }
+}
+/* Big flicker & yellow highlight for major headers */
+@keyframes hacker-header-flicker {
+  0%, 100% { color: #00ff00 }
+  12% { color: #ffcc00 }
+  18% { color: #00ff00 }
+  31% { color: #ffcc00 }
+  53% { color: #00ff00 }
+  72% { color: #ffcc00 }
+  83% { color: #00ff00 }
+}
+@keyframes matrix-rain {
+  0% { background-position: 0 -100vh; }
+  100% { background-position: 0 0; }
+}
 
-/* Responsive Styles */
+/* Matrix rain: example for backgrounds. To use, add a <div class="animate-matrix"></div> to the layout */
+.animate-matrix {
+  background: repeating-linear-gradient(
+    to bottom,
+    #00ff0033 0, #00ff0033 2px, transparent 2px, transparent 12px
+  ),
+  repeating-linear-gradient(
+    to bottom,
+    #ffcc0022 0, #ffcc0022 1px, transparent 1px, transparent 18px
+  ),
+  repeating-linear-gradient(
+    to bottom,
+    #00ff00 0, #00ff00 1px, transparent 1px, transparent 35px
+  );
+}
+
 @media (max-width: 768px) {
   .profile-container {
     flex-direction: column !important;
@@ -138,3 +257,4 @@ body.dark-mode {
   background-color: #121212 !important;
   color: #fff !important;
 }
+
