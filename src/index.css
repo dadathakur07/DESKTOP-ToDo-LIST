@@ -1,169 +1,67 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* OVERRIDES FOR HACKER THEME */
 @layer base {
-  :root {
-    --background: 220 25% 98%;
-    --foreground: 220 40% 15%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 220 40% 15%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 40% 15%;
-
-    --primary: 222 70% 50%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 260 60% 60%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 220 15% 95%;
-    --muted-foreground: 220 20% 40%;
-
-    --accent: 180 50% 50%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 220 20% 90%;
-    --input: 220 20% 90%;
-    --ring: 222 70% 50%;
-
-    --radius: 0.5rem;
-
-    --task-low: 180 70% 50%;
-    --task-medium: 40 95% 60%;
-    --task-high: 0 80% 60%;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
   body {
-    @apply bg-background text-foreground;
+    @apply font-sans bg-hacker text-neon transition-colors duration-300;
+    margin: 0;
+    padding: 0;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-neon font-bold;
+  }
+
+  a, a:visited {
+    @apply text-neon transition-colors duration-300;
+    text-decoration: none;
+  }
+  a:hover {
+    @apply text-accent;
   }
 }
-@layer base {
-  :root {
-    --background: 228 16% 12%;
-    --foreground: 195 100% 97%;
-    --card: 232 14% 14%;
-    --card-foreground: 208 91% 87%;
-    --popover: 232 14% 14%;
-    --popover-foreground: 208 91% 87%;
-    --primary: 182 87% 54%;
-    --primary-foreground: 234 10% 10%;
-    --secondary: 293 100% 23%;
-    --secondary-foreground: 202 100% 96%;
-    --accent: 308 84% 62%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 345 89% 36%;
-    --destructive-foreground: 195 100% 97%;
-    --muted: 234 18% 16%;
-    --muted-foreground: 186 100% 92%;
-    --border: 182 47% 34%;
-    --input: 234 18% 16%;
-    --ring: 184 100% 88%;
-    --radius: 0.9rem;
 
-    --task-low: 160 100% 36%;
-    --task-medium: 53 100% 64%;
-    --task-high: 345 89% 44%;
-
-    --sidebar-background: 236 12% 8%;
-    --sidebar-foreground: 195 100% 97%;
-    --sidebar-primary: 182 87% 54%;
-    --sidebar-primary-foreground: 234 10% 10%;
-    --sidebar-accent: 308 84% 62%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 182 47% 34%;
-    --sidebar-ring: 184 100% 88%;
-  }
-
-  .dark {
-    --background: 232 14% 11%;
-    --foreground: 195 100% 97%;
-    --card: 232 14% 14%;
-    --card-foreground: 195 100% 97%;
-    --popover: 232 14% 14%;
-    --popover-foreground: 195 100% 97%;
-    --primary: 182 87% 54%;
-    --primary-foreground: 234 10% 10%;
-    --secondary: 293 100% 23%;
-    --secondary-foreground: 202 100% 96%;
-    --accent: 308 84% 62%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 345 89% 36%;
-    --destructive-foreground: 195 100% 97%;
-    --muted: 234 18% 16%;
-    --muted-foreground: 186 100% 92%;
-    --border: 182 47% 34%;
-    --input: 234 18% 16%;
-    --ring: 184 100% 88%;
-    --radius: 0.9rem;
-  }
-}
-@layer utilities {
+@layer components {
   .glass-morphism {
-    @apply backdrop-blur-xl bg-cyan-800/10 border border-cyan-400/10 shadow-[0_8px_32px_0_rgba(0,255,255,0.12)];
+    @apply backdrop-blur-md bg-paper/30 border border-neon/20 shadow-neon;
   }
-  .text-gradient-primary {
-    @apply bg-gradient-to-br from-cyan-400 via-fuchsia-400 to-cyan-200 bg-clip-text text-transparent;
+  .btn-neon {
+    @apply bg-neon text-black px-4 py-2 rounded transition-colors hover:bg-accent hover:text-black font-bold;
   }
-  .hover-scale {
-    @apply transition-transform duration-200 hover:scale-105;
+  .input-hacker {
+    @apply bg-form border border-neon text-white rounded px-3 py-2 focus:border-accent focus:outline-none transition-colors;
+  }
+  .card-hacker {
+    @apply bg-paper rounded shadow-neon p-4 transition-transform transform hover:scale-105 hover:shadow-neon;
   }
 }
+
+@layer utilities {
+  .shadow-neon {
+    box-shadow: 0 4px 20px rgba(0, 255, 0, 0.5);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .profile-container {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  nav ul li {
+    display: block !important;
+    margin: 10px 0 !important;
+  }
+  .profile-image {
+    margin-bottom: 10px !important;
+  }
+}
+
+/* Add body.dark-mode styles for future toggling, if needed */
+body.dark-mode {
+  background-color: #121212 !important;
+  color: #fff !important;
+}
+

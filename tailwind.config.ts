@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -21,9 +20,23 @@ export default {
     extend: {
       fontFamily: {
         mono: ['Fira Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        sans: ['Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'], // updated to Montserrat
+        sans: ['Roboto', 'Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       colors: {
+        primary: {
+          DEFAULT: '#00ff00',
+          foreground: '#000',
+        },
+        accent: {
+          DEFAULT: '#ffcc00',
+          foreground: '#000',
+        },
+        neon: '#00ff00',
+        hacker: '#1e1e1e',
+        paper: '#2e2e2e',
+        border: '#00ff00',
+        form: '#2e2e2e',
+        grayish: '#333',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -72,6 +85,12 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))'
         }
+      },
+      transitionProperty: {
+        'colors': 'background-color, color, border-color, text-decoration-color, fill, stroke',
+      },
+      boxShadow: {
+        neon: '0 4px 20px rgba(0,255,0,0.5)',
       },
       borderRadius: {
         lg: 'var(--radius)',
