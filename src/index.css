@@ -2,364 +2,97 @@
 @tailwind components;
 @tailwind utilities;
 
-/* OVERRIDES FOR HACKER THEME */
 @layer base {
+  :root {
+    --background: 220 25% 98%;
+    --foreground: 220 40% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 40% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 40% 15%;
+
+    --primary: 222 70% 50%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 260 60% 60%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 15% 95%;
+    --muted-foreground: 220 20% 40%;
+
+    --accent: 180 50% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 20% 90%;
+    --input: 220 20% 90%;
+    --ring: 222 70% 50%;
+
+    --radius: 0.5rem;
+
+    --task-low: 180 70% 50%;
+    --task-medium: 40 95% 60%;
+    --task-high: 0 80% 60%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
   body {
-    @apply font-sans bg-hacker text-neon transition-colors duration-300;
-    margin: 0;
-    padding: 0;
+    @apply bg-background text-foreground;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply text-neon font-bold;
-    /* Flicker and animated glow for section headers */
-    animation: hacker-header-flicker 2.2s infinite alternate;
-    position: relative;
-    z-index: 1;
-  }
-  a, a:visited {
-    @apply text-neon transition-colors duration-300;
-    text-decoration: none;
-  }
-  a:hover {
-    @apply text-accent;
-  }
-}
-
-@layer components {
-  .glass-morphism {
-    @apply backdrop-blur-md bg-paper/30 border border-neon/20 shadow-neon;
-  }
-  .btn-neon {
-    @apply bg-neon text-black px-4 py-2 rounded transition-colors hover:bg-accent hover:text-black font-bold relative overflow-hidden;
-    box-shadow: 0 0 0px 0px #00ff00;
-    transition:
-      background 0.2s, color 0.2s, box-shadow 0.3s, filter 0.2s, transform 0.13s;
-  }
-  .btn-neon::before {
-    content: "";
-    position: absolute;
-    inset: -2px;
-    border-radius: 12px;
-    pointer-events: none;
-    z-index: 1;
-    background: linear-gradient(100deg, #00ff00 50%, #ffcc00 100%);
-    opacity: 0.13;
-    filter: blur(8px);
-    transition: opacity 0.3s;
-  }
-  .btn-neon:active {
-    transform: scale(0.96);
-    filter: brightness(111%);
-    box-shadow: 0 0 26px 6px #00ff0066, 0 0 36px 18px #ffcc0033;
-  }
-  .btn-neon:hover {
-    box-shadow: 0 0 32px 6px #00ff0066, 0 0 60px 10px #ffcc0033, 0 0 2px 0 #fff;
-  }
-  .input-hacker {
-    @apply bg-form border border-neon text-white rounded px-3 py-2 focus:border-accent focus:outline-none transition-colors;
-    box-shadow: 0 2px 12px 0 #00ff0033;
-    transition: box-shadow 0.3s, border-color 0.3s;
-  }
-  .input-hacker:focus {
-    box-shadow: 0 2px 18px 4px #ffcc0022, 0 0 0 2px #ffcc0050;
-  }
-  .card-hacker {
-    @apply bg-paper rounded shadow-neon p-4 transition-transform transform hover:scale-105 hover:shadow-neon relative overflow-hidden;
-    /* Extra neon "aura" on hover */
-  }
-  .card-hacker::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.1;
-    background: radial-gradient(ellipse at 40% 60%, #00ff00 40%, transparent 90%);
-    filter: blur(8px);
-    transition: opacity 0.4s;
-    z-index: 1;
-  }
-  .card-hacker:hover::after {
-    opacity: 0.36;
-    background: radial-gradient(ellipse at 60% 60%, #ffcc00 20%, #00ff00 40%, #1e1e1e 90%);
-    filter: blur(24px);
-  }
-
-  /* NEW: Floating project animation and border shimmer for project cards */
-  .hacker-project-card {
-    position: relative;
-    overflow: visible;
-    z-index: 5;
-    will-change: transform, box-shadow, filter;
-    animation: float-cool 3.5s ease-in-out infinite alternate, pulse-glow 3.4s ease-in-out infinite alternate;
-    transition: box-shadow 0.27s, transform 0.22s, filter 0.22s;
-    box-shadow: 0 0 80px 0 #00ff0030, 0 0 0 0 #ffcc0066;
-  }
-  .hacker-project-card:hover {
-    transform: translateY(-10px) scale(1.04) rotate(-1deg);
-    filter: brightness(1.1) drop-shadow(0 0 36px #00ff66aa) saturate(1.5);
-    box-shadow: 0 0 90px 12px #00ff0080,0 0 66px 14px #ffcc00bb,0 0 2px 0 #fff;
-    z-index: 16;
-  }
-  /* Neon border shimmer effect */
-  .neon-border-shimmer {
-    pointer-events: none;
-    border-radius: 1.2rem;
-    position: absolute;
-    inset: -2px;
-    background: linear-gradient(
-      120deg,
-      #00ff00,
-      #ffcc00 25%,
-      #00ffcc 55%,
-      #ff44ee 85%,
-      #00ff00
-    );
-    opacity: 0.15;
-    filter: blur(7px) brightness(1.5);
-    z-index: 2;
-    animation: border-shimmer 2.9s linear infinite;
-    transition: opacity 0.3s;
-    mix-blend-mode: screen;
-  }
-  .hacker-project-card:hover .neon-border-shimmer {
-    opacity: 0.4;
-    filter: blur(18px) brightness(2.4);
-  }
-}
-
-@layer utilities {
-  box-shadow: 0 4px 20px rgba(0, 255, 0, 0.5);
-  .shadow-neon {
-    box-shadow: 0 4px 20px rgba(0, 255, 0, 0.5), 0 0 12px #ffcc0033, 0 1px 16px #00ff0066;
-  }
-  .hover-scale {
-    @apply transition-transform duration-200 hover:scale-105;
-  }
-  .text-gradient-primary {
-    @apply bg-gradient-to-br from-neon via-neon/70 to-accent bg-clip-text text-transparent;
-    animation: animated-gradient 2.7s ease-in-out infinite alternate;
-    background-size: 200% 200%;
-  }
-  /* Enhanced text flicker on request */
-  .flicker-super {
-    animation: flicker-cool 1.3s infinite alternate, neon-text-shadow 3.2s infinite alternate;
-  }
-  /* Upgraded underlines and neon rainbow effects */
-  .animate-underline {
-    position: relative;
-    overflow: hidden;
-  }
-  .animate-underline::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #00ff00 0%, #ffcc00 40%, #0ff 80%, #ff44ee 100%);
-    transform: scaleX(0);
-    transition: transform 0.4s cubic-bezier(.43,1.2,.22,1);
-    transform-origin: bottom right;
-  }
-  .animate-underline:hover::after, .animate-underline:focus::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
-  }
-  .animate-spin {
-    animation: spin-cool 1.6s linear infinite;
-  }
-  .animate-bounce {
-    animation: bounce-cool 0.85s infinite alternate cubic-bezier(0.19,1,0.22,1);
-  }
-  .animate-hacker-flicker {
-    animation: flicker-cool 2s infinite alternate, neon-text-shadow 1.8s infinite alternate;
-  }
-  .animate-entrance {
-    animation: entrance-glow 0.8s cubic-bezier(.34,1.56,.64,1) both;
-  }
-  .animate-matrix {
-    position: fixed;
-    left: 0; top: 0; width: 100vw; height: 100vh;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.07;
-    animation: matrix-rain 22s linear infinite;
-  }
-}
-
-/* Keyframes for Cool Animations & Effects */
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 12px 2px #00ff0066, 0 0 24px 12px #00ff001a;
-    color: #00ffcc;
-  }
-  50% {
-    box-shadow: 0 0 24px 10px #ffcc00bb, 0 0 48px 25px #00ff0088;
-    color: #ffcc00;
-  }
-}
-@keyframes spin-cool {
-  0% { transform: rotate(0deg);}
-  100% { transform: rotate(360deg);}
-}
-@keyframes bounce-cool {
-  0% { transform: translateY(0);}
-  100% { transform: translateY(-15px) scale(1.08);}
-}
-@keyframes flicker-cool {
-  0%, 100% { opacity: 1; filter: blur(0);}
-  12% { opacity: 0.6;}
-  22% { opacity: 0.82;}
-  37% { opacity: 0.3;}
-  55% { opacity: 1;}
-  66% { opacity: 0.76;}
-  77% { opacity: 0.95;}
-  85% { opacity: 0.5;}
-}
-/* Rainbow-animated highlight for section headers and gradient text */
-@keyframes animated-gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
-/* Neon text-shadow flicker pulse */
-@keyframes neon-text-shadow {
-  0% {
-    text-shadow: 0 0 4px #00ff00, 0 0 8px #ffcc0033, 0 0 2px #fff;
-  }
-  50% {
-    text-shadow: 0 0 12px #00ff00, 0 0 4px #ffcc00, 0 0 10px #fff;
-  }
-  100% {
-    text-shadow: 0 0 18px #00ff00, 0 0 12px #ffcc0055, 0 0 2px #fff;
-  }
-}
-/* Entrance animation: combine scale, drop, opacity, glow */
-@keyframes entrance-glow {
-  from {
-    opacity: 0;
-    transform: scale(0.91) translateY(28px);
-    filter: blur(8px) brightness(0.81);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-    filter: blur(0) brightness(1);
-  }
-}
-/* Big flicker & yellow highlight for major headers */
-@keyframes hacker-header-flicker {
-  0%, 100% { color: #00ff00 }
-  12% { color: #ffcc00 }
-  18% { color: #00ff00 }
-  31% { color: #ffcc00 }
-  53% { color: #00ff00 }
-  72% { color: #ffcc00 }
-  83% { color: #00ff00 }
-}
-@keyframes matrix-rain {
-  0% { background-position: 0 -100vh; }
-  100% { background-position: 0 0; }
-}
-
-/* Matrix rain: example for backgrounds. To use, add a <div class="animate-matrix"></div> to the layout */
-.animate-matrix {
-  background: repeating-linear-gradient(
-    to bottom,
-    #00ff0033 0, #00ff0033 2px, transparent 2px, transparent 12px
-  ),
-  repeating-linear-gradient(
-    to bottom,
-    #ffcc0022 0, #ffcc0022 1px, transparent 1px, transparent 18px
-  ),
-  repeating-linear-gradient(
-    to bottom,
-    #00ff00 0, #00ff00 1px, transparent 1px, transparent 35px
-  );
-}
-
-@media (max-width: 768px) {
-  .profile-container {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-  }
-  nav ul li {
-    display: block !important;
-    margin: 10px 0 !important;
-  }
-  .profile-image {
-    margin-bottom: 10px !important;
-  }
-}
-
-/* Add body.dark-mode styles for future toggling, if needed */
-body.dark-mode {
-  background-color: #121212 !important;
-  color: #fff !important;
-}
-
-/* Cool new float animation for project cards */
-@keyframes float-cool {
-  0% {
-    transform: translateY(0) scale(1) rotate(0);
-    box-shadow: 0 0 40px 0 #00ff0030, 0 0 0 0 #ffcc0066;
-  }
-  40% {
-    transform: translateY(-6px) scale(1.017) rotate(-0.5deg);
-    box-shadow: 0 0 80px 2px #00ff0060,0 0 14px 1px #ffcc0088;
-  }
-  70% {
-    transform: translateY(-13px) scale(1.025) rotate(-1deg);
-    box-shadow: 0 0 90px 1px #00ffd050,0 0 37px 9px #ffcc00cc;
-  }
-  100% {
-    transform: translateY(-7px) scale(1.005) rotate(-0.2deg);
-    box-shadow: 0 0 100px 5px #00ffeebb,0 0 36px 12px #ffcc00cc;
-  }
-}
-/* Shimmering neon border movement */
-@keyframes border-shimmer {
-  0% {
-    background-position: 0% 50%;
-    opacity: 0.07;
-  }
-  40% {
-    background-position: 60% 70%;
-    opacity: 0.17;
-  }
-  60% {
-    background-position: 100% 30%;
-    opacity: 0.22;
-  }
-  90% {
-    background-position: 70% 80%;
-    opacity: 0.22;
-  }
-  100% {
-    background-position: 0% 50%;
-    opacity: 0.13;
-  }
-}
-/* Enhanced project entrance animation */
-@keyframes project-entrance {
-  0% {
-    opacity: 0;
-    filter: blur(14px) brightness(0.1);
-    transform: scale(0.9) translateY(80px) rotate(2deg);
-  }
-  80% {
-    opacity: 0.88;
-    filter: blur(2px) brightness(1.06);
-    transform: scale(1.03) translateY(-6px) rotate(-1deg);
-  }
-  100% {
-    opacity: 1;
-    filter: blur(0) brightness(1.13);
-    transform: scale(1) translateY(0) rotate(0deg);
-  }
-}
-
-.animate-project-entrance {
-  animation: project-entrance 0.86s cubic-bezier(.42,1.38,.3,1) both;
 }
