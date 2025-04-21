@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Github, Monitor, Cpu, Terminal, Code, Wrench, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -122,9 +121,21 @@ export default function Index() {
           </h2>
           <div className="grid gap-6">
             {projects.map(({ title, desc, icon: Icon, link }) => (
-              <Card key={title} className="glass-morphism border border-cyan-500/10 flex flex-col md:flex-row items-center md:items-start gap-5 p-6 animate-scale-in hover-scale hover:shadow-cyan-400/50">
-                <Icon className="w-10 h-10 text-cyan-400 drop-shadow-lg" />
-                <div>
+              <Card
+                key={title}
+                className={`
+                  hacker-project-card
+                  glass-morphism border border-cyan-500/10 flex flex-col md:flex-row items-center md:items-start gap-5 p-6
+                  animate-project-entrance
+                  hover:z-30
+                `}
+                style={{
+                  animationDelay: `${projects.findIndex(p => p.title === title) * 0.12}s`
+                }}
+              >
+                <span className="absolute inset-0 z-10 pointer-events-none neon-border-shimmer rounded-2xl" />
+                <Icon className="w-10 h-10 text-cyan-400 drop-shadow-lg z-20" />
+                <div className="z-20">
                   <div className="font-bold text-xl text-white/90">{title}</div>
                   <p className="text-cyan-200/80">{desc}</p>
                   <Button asChild size="sm" className="mt-2 bg-cyan-800/30 hover:bg-cyan-700/50 font-mono">
@@ -149,4 +160,3 @@ export default function Index() {
     </div>
   );
 }
-
