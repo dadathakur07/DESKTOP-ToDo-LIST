@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -50,6 +51,71 @@
   .text-gradient-primary {
     @apply bg-gradient-to-br from-neon via-neon/70 to-accent bg-clip-text text-transparent;
   }
+
+  /* NEW: Cool Animations */
+  .animate-pulse-glow {
+    animation: pulse-glow 1.4s infinite alternate cubic-bezier(0.4, 0, 0.6, 1);
+  }
+  .animate-underline {
+    position: relative;
+    overflow: hidden;
+  }
+  .animate-underline::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00ff00 0%, #ffcc00 100%);
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(.43,1.2,.22,1);
+    transform-origin: bottom right;
+  }
+  .animate-underline:hover::after, .animate-underline:focus::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  .animate-spin {
+    animation: spin-cool 1.6s linear infinite;
+  }
+  .animate-bounce {
+    animation: bounce-cool 1s infinite alternate cubic-bezier(0.19,1,0.22,1);
+  }
+  .animate-hacker-flicker {
+    animation: flicker-cool 2s infinite alternate;
+  }
+}
+
+/* Keyframes for NEW Animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 12px 2px #00ff0066, 0 0 24px 12px #00ff001a;
+    color: #00ffcc;
+  }
+  50% {
+    box-shadow: 0 0 24px 10px #ffcc00bb, 0 0 48px 25px #00ff0088;
+    color: #ffcc00;
+  }
+}
+
+@keyframes spin-cool {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+
+@keyframes bounce-cool {
+  0% { transform: translateY(0);}
+  100% { transform: translateY(-15px) scale(1.08);}
+}
+
+@keyframes flicker-cool {
+  0%, 100% { opacity: 1; filter: blur(0);}
+  12% { opacity: 0.6;}
+  22% { opacity: 0.82;}
+  37% { opacity: 0.3;}
+  55% { opacity: 1;}
+  66% { opacity: 0.76;}
+  77% { opacity: 0.95;}
+  85% { opacity: 0.5;}
 }
 
 /* Responsive Styles */
