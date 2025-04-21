@@ -90,7 +90,6 @@
     overflow: visible;
     z-index: 5;
     will-change: transform, box-shadow, filter;
-    animation: float-cool 3.5s ease-in-out infinite alternate, pulse-glow 3.4s ease-in-out infinite alternate;
     transition: box-shadow 0.27s, transform 0.22s, filter 0.22s;
     box-shadow: 0 0 80px 0 #00ff0030, 0 0 0 0 #ffcc0066;
   }
@@ -99,6 +98,7 @@
     filter: brightness(1.1) drop-shadow(0 0 36px #00ff66aa) saturate(1.5);
     box-shadow: 0 0 90px 12px #00ff0080,0 0 66px 14px #ffcc00bb,0 0 2px 0 #fff;
     z-index: 16;
+    animation: float-cool 3.5s ease-in-out infinite alternate, pulse-glow 3.4s ease-in-out infinite alternate;
   }
   /* Neon border shimmer effect */
   .neon-border-shimmer {
@@ -365,22 +365,23 @@ body.dark-mode {
 }
 
 /* Modify project card neon and glow color to sky blue and reduce intensity */
-
 .hacker-project-card {
   position: relative;
   overflow: visible;
   z-index: 5;
   will-change: transform, box-shadow, filter;
-  animation: float-cool 3.5s ease-in-out infinite alternate, pulse-glow-skyblue 3.4s ease-in-out infinite alternate;
+  /* Remove animation and reduce box-shadow intensity (static) */
   transition: box-shadow 0.27s, transform 0.22s, filter 0.22s;
-  box-shadow: 0 0 40px 0 #33c3f033, 0 0 0 0 #33c3f099;
+  box-shadow: 0 0 12px 0 #33c3f022, 0 0 0 0 #33c3f080;
 }
 .hacker-project-card:hover {
+  animation: float-cool 3.5s ease-in-out infinite alternate, pulse-glow-skyblue 3.4s ease-in-out infinite alternate;
   transform: translateY(-10px) scale(1.04) rotate(-1deg);
   filter: brightness(1.05) drop-shadow(0 0 25px #33c3f0aa) saturate(1.3);
   box-shadow: 0 0 50px 8px #33c3f099, 0 0 40px 10px #33c3f0cc, 0 0 2px 0 #33c3f0ff;
   z-index: 16;
 }
+
 /* Neon border shimmer effect */
 .neon-border-shimmer {
   pointer-events: none;
