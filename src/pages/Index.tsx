@@ -1,231 +1,151 @@
 
 import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { Task } from "@/types";
-import { Header } from "@/components/Header";
-import { TaskList } from "@/components/TaskList";
-import { TaskProgress } from "@/components/TaskProgress";
-import { CategoryForm } from "@/components/CategoryForm";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Github, Monitor, Cpu, Terminal, Code, Wrench, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { TaskForm } from "@/components/TaskForm";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/components/ui/use-toast";
-import { Folder, Tag } from "lucide-react";
 
-// Sample data for initial state
-const sampleTasks: Task[] = [
+function Typewriter({ text, delay = 70 }) {
+  const [displayed, setDisplayed] = useState("");
+  useEffect(() => {
+    setDisplayed("");
+    let idx = 0;
+    const interval = setInterval(() => {
+      setDisplayed(text.slice(0, idx));
+      idx++;
+      if (idx > text.length) clearInterval(interval);
+    }, delay);
+    return () => clearInterval(interval);
+  }, [text, delay]);
+  return (
+    <span className="text-gradient-primary font-mono animate-pulse">
+      {displayed}
+      <span className="blink">█</span>
+      <style>
+        {`.blink{animation:blink 1s steps(2, start) infinite;}
+          @keyframes blink{to{opacity:0;}}`}
+      </style>
+    </span>
+  );
+}
+
+const skills = [
+  { icon: Code, label: "Fullstack Dev" },
+  { icon: Cpu, label: "Reverse Engineering" },
+  { icon: Terminal, label: "Linux & Shell" },
+  { icon: Wrench, label: "Toolsmith" },
+  { icon: Monitor, label: "C/C++/Rust" },
+  { icon: Layers, label: "Cybersecurity" },
+];
+
+const projects = [
   {
-    id: uuidv4(),
-    title: "Complete project proposal",
-    description: "Write the first draft of the project proposal document",
-    completed: false,
-    priority: "high",
-    category: "Work",
-    dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
-    createdAt: new Date(),
+    title: "NetScanX",
+    desc: "Network scanner CLI tool with stealth fingerprinting and live map UI.",
+    icon: Terminal,
+    link: "#",
   },
   {
-    id: uuidv4(),
-    title: "Go grocery shopping",
-    description: "Buy fruits, vegetables, and weekly essentials",
-    completed: true,
-    priority: "medium",
-    category: "Personal",
-    createdAt: new Date(),
+    title: "CipherSuite",
+    desc: "Custom cryptography suite for secure communications.",
+    icon: Cpu,
+    link: "#",
   },
   {
-    id: uuidv4(),
-    title: "Review marketing plan",
-    description: "Check the new marketing strategy for next quarter",
-    completed: false,
-    priority: "medium",
-    category: "Work",
-    dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
-    createdAt: new Date(),
-  },
-  {
-    id: uuidv4(),
-    title: "Schedule dentist appointment",
-    description: "Call dentist to schedule annual checkup",
-    completed: false,
-    priority: "low",
-    category: "Health",
-    createdAt: new Date(),
-  },
-  {
-    id: uuidv4(),
-    title: "Water plants",
-    description: "Don't forget to water indoor and balcony plants",
-    completed: false,
-    priority: "low",
-    category: "Home",
-    createdAt: new Date(),
+    title: "GhostPanel",
+    desc: "Dark web admin panel, react + node, stealth/obfuscation focused.",
+    icon: Monitor,
+    link: "#",
   },
 ];
 
-const initialCategories = ["Work", "Personal", "Health", "Home"];
-
-const Index = () => {
-  const { toast } = useToast();
-  const [tasks, setTasks] = useState<Task[]>(sampleTasks);
-  const [categories, setCategories] = useState<string[]>(initialCategories);
-  const [editTask, setEditTask] = useState<Task | undefined>(undefined);
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
-  
-  // Add a new task
-  const addTask = (taskData: Omit<Task, "id" | "createdAt">) => {
-    const newTask: Task = {
-      ...taskData,
-      id: uuidv4(),
-      createdAt: new Date(),
-    };
-    
-    setTasks((prev) => [newTask, ...prev]);
-    toast({
-      title: "Task added",
-      description: "Your new task has been created successfully.",
-    });
-  };
-  
-  // Toggle task completion
-  const toggleComplete = (id: string) => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
-  };
-  
-  // Edit task
-  const handleEditTask = (task: Task) => {
-    setEditTask(task);
-    setEditDialogOpen(true);
-  };
-  
-  // Update task
-  const updateTask = (taskData: Omit<Task, "id" | "createdAt">) => {
-    if (!editTask) return;
-    
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === editTask.id
-          ? { ...task, ...taskData }
-          : task
-      )
-    );
-    
-    setEditDialogOpen(false);
-    setEditTask(undefined);
-    toast({
-      title: "Task updated",
-      description: "Task has been updated successfully.",
-    });
-  };
-  
-  // Delete task
-  const deleteTask = (id: string) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
-    toast({
-      title: "Task deleted",
-      description: "Your task has been deleted.",
-      variant: "destructive",
-    });
-  };
-  
-  // Add category
-  const addCategory = (name: string) => {
-    if (categories.includes(name)) {
-      toast({
-        title: "Category already exists",
-        description: "Please enter a unique category name.",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    setCategories((prev) => [...prev, name]);
-    toast({
-      title: "Category added",
-      description: `Category "${name}" has been added.`,
-    });
-  };
-
+export default function Index() {
   return (
-    <div className="min-h-screen bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <Header categories={categories} onAddTask={addTask} />
-        
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-3">
-            <Tabs defaultValue="tasks" className="w-full">
-              <TabsList className="mb-6">
-                <TabsTrigger value="tasks" className="flex gap-2">
-                  <Tag className="h-4 w-4" />
-                  Tasks
-                </TabsTrigger>
-                <TabsTrigger value="categories" className="flex gap-2">
-                  <Folder className="h-4 w-4" />
-                  Categories
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="tasks" className="space-y-6">
-                <TaskList
-                  tasks={tasks}
-                  onToggleComplete={toggleComplete}
-                  onEdit={handleEditTask}
-                  onDelete={deleteTask}
-                />
-              </TabsContent>
-              
-              <TabsContent value="categories" className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <CategoryForm onSubmit={addCategory} />
-                  
-                  <div className="bg-white p-6 rounded-xl shadow-sm border">
-                    <h2 className="text-xl font-semibold mb-4">Categories</h2>
-                    <div className="flex flex-wrap gap-2">
-                      {categories.map((category) => (
-                        <Badge key={category} variant="outline" className="py-2">
-                          {category}
-                        </Badge>
-                      ))}
-                    </div>
-                    
-                    {categories.length === 0 && (
-                      <p className="text-muted-foreground text-sm">
-                        No categories yet. Add your first category to organize tasks.
-                      </p>
-                    )}
-                  </div>
+    <div className="min-h-screen bg-gradient-to-tr from-[#1A1F2C] to-[#202844] dark:bg-gradient-to-tr dark:from-[#16181F] dark:to-[#0A0B14] transition-colors">
+      <main className="max-w-4xl mx-auto px-4 py-12 flex flex-col gap-16">
+        {/* HERO */}
+        <section className="flex flex-col items-center justify-center text-center pt-4">
+          <div className="text-4xl md:text-6xl font-black text-gradient-primary tracking-tight animate-fade-in drop-shadow-lg mb-4">
+            <Typewriter text="ROHIT: The Hacker." />
+          </div>
+          <p className="text-lg md:text-2xl text-cyan-400/90 mb-8 max-w-xl animate-fade-in delay-100">
+            🛡️ Cybersecurity Enthusiast & Code Magician. Building, breaking, and owning the network—one byte at a time.
+          </p>
+          <Button asChild className="glass-morphism px-8 py-4 text-lg font-mono font-bold shadow-2xl animate-scale-in hover:shadow-cyan-500/20">
+            <a href="#projects">
+              <span className="flex items-center gap-2 text-cyan-400">
+                <Code className="w-6 h-6" />
+                View Projects
+              </span>
+            </a>
+          </Button>
+        </section>
+
+        <Separator className="my-0 opacity-10" />
+
+        {/* ABOUT */}
+        <section id="about" className="glass-morphism rounded-2xl p-8 animate-fade-in flex flex-col gap-2 shadow-cyan-400/10 shadow-lg">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-wide text-cyan-400 mb-2 flex items-center gap-2">
+            <Terminal className="w-6 h-6 animate-enter" /> About "ROHIT"
+          </h2>
+          <p className="font-mono text-gray-200/80 md:text-lg animate-fade-in">
+            I'm Rohit, a hacker and developer passionate about building creative software, exploiting security holes, and automating everything.
+            <br />
+            <span className="text-cyan-300">
+              My playground: CTFs, networks, servers, and code editors in the dark 🌑.
+            </span>
+          </p>
+        </section>
+
+        {/* SKILLS */}
+        <section id="skills" className="rounded-2xl glass-morphism p-8 mt-2 animate-slide-in-right">
+          <h2 className="text-2xl font-bold mb-4 text-cyan-400 flex items-center gap-2">
+            <Cpu className="w-5 h-5" /> Skills
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
+            {skills.map(({ icon: Icon, label }) => (
+              <div
+                key={label}
+                className="flex flex-col items-center glass-morphism hover-scale p-4 rounded-lg shadow-md shadow-cyan-900/10 bg-white/5"
+              >
+                <Icon className="w-8 h-8 mb-2 text-cyan-300 animate-fade-in" />
+                <span className="font-mono text-gray-200/80 text-lg">{label}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* PROJECTS */}
+        <section id="projects" className="rounded-2xl glass-morphism p-8 animate-fade-in">
+          <h2 className="text-2xl font-bold mb-4 text-cyan-400 flex items-center gap-2">
+            <Layers className="w-5 h-5" /> Projects
+          </h2>
+          <div className="grid gap-6">
+            {projects.map(({ title, desc, icon: Icon, link }) => (
+              <Card key={title} className="glass-morphism border border-cyan-500/10 flex flex-col md:flex-row items-center md:items-start gap-5 p-6 animate-scale-in hover-scale hover:shadow-cyan-400/50">
+                <Icon className="w-10 h-10 text-cyan-400 drop-shadow-lg" />
+                <div>
+                  <div className="font-bold text-xl text-white/90">{title}</div>
+                  <p className="text-cyan-200/80">{desc}</p>
+                  <Button asChild size="sm" className="mt-2 bg-cyan-800/30 hover:bg-cyan-700/50 font-mono">
+                    <a href={link} target="_blank" rel="noopener noreferrer">View Repo</a>
+                  </Button>
                 </div>
-              </TabsContent>
-            </Tabs>
+              </Card>
+            ))}
           </div>
-          
-          <div className="space-y-6">
-            <TaskProgress tasks={tasks} />
-          </div>
-        </div>
-      </div>
-      
-      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-        <DialogContent className="sm:max-w-[500px]">
-          {editTask && (
-            <TaskForm
-              onSubmit={updateTask}
-              categories={categories}
-              initialTask={editTask}
-              onCancel={() => setEditDialogOpen(false)}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+        </section>
+
+        {/* CONTACT */}
+        <section id="contact" className="py-8 flex flex-col items-center animate-fade-in">
+          <p className="mb-3 text-lg text-gray-300 font-mono">Let's connect:</p>
+          <Button asChild variant="outline" className="border-cyan-600/50 text-cyan-400 hover:bg-cyan-950/30 bg-transparent font-mono">
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
+              <Github className="w-5 h-5 mr-2" /> github.com/ROHIT
+            </a>
+          </Button>
+        </section>
+      </main>
     </div>
   );
-};
-
-export default Index;
+}

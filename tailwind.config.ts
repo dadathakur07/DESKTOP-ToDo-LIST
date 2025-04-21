@@ -18,6 +18,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'mono': ['Fira Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+				'sans': ['Orbitron', 'Montserrat', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -52,7 +56,7 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				task: {
+        task: {
 					low: 'hsl(var(--task-low))',
 					medium: 'hsl(var(--task-medium))',
 					high: 'hsl(var(--task-high))',
@@ -73,27 +77,54 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+      fontWeight: {
+        black: '900',
+      },
 			keyframes: {
 				'accordion-down': {
 					from: {
-						height: '0'
+						height: '0',
+            opacity: '0'
 					},
 					to: {
-						height: 'var(--radix-accordion-content-height)'
+						height: 'var(--radix-accordion-content-height)',
+            opacity: '1'
 					}
 				},
 				'accordion-up': {
 					from: {
-						height: 'var(--radix-accordion-content-height)'
+						height: 'var(--radix-accordion-content-height)',
+            opacity: '1'
 					},
 					to: {
-						height: '0'
+						height: '0',
+            opacity: '0'
 					}
-				}
+				},
+        'fade-in': {
+          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" }
+        },
+        'scale-in': {
+            "0%": { transform: "scale(0.95)", opacity: "0" },
+            "100%": { transform: "scale(1)", opacity: "1" }
+        },
+        'slide-in-right': {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0)" }
+        },
+        'enter': {
+          "0%": { opacity: "0", transform: "scale(0.9) translateY(16px)" },
+          "100%": { opacity: "1", transform: "scale(1) translateY(0)" }
+        }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+        "fade-in": "fade-in 1s ease-in",
+        "scale-in": "scale-in 0.4s cubic-bezier(.4,2,.3,1)",
+        "slide-in-right": "slide-in-right 0.7s cubic-bezier(.38,.2,.22,1)",
+        "enter": "enter 0.7s cubic-bezier(.43,1.2,.22,1)",
 			}
 		}
 	},
